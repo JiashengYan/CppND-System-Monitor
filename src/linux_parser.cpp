@@ -70,7 +70,7 @@ vector<int> LinuxParser::Pids() {
 
 // TODO: Read and return the system memory utilization
 float LinuxParser::MemoryUtilization() { 
-  float MemTotal, MemFree, Buffers, Cached, SReclaimable, Shmem;
+  float MemTotal, MemFree;
   string line, key;
   float value;
   std::ifstream filestream(kProcDirectory + kMeminfoFilename);
@@ -80,10 +80,6 @@ float LinuxParser::MemoryUtilization() {
       linestream >> key >> value;
       if(key=="MemTotal:") MemTotal=value;
       else if(key=="MemFree:") MemFree=value;
-      else if(key=="Buffers:") Buffers=value;
-      else if(key=="Cached:") Cached=value;
-      else if(key=="SReclaimable:") SReclaimable=value;
-      else if(key=="Shmem:") Shmem=value;
     }
     return float((MemTotal-MemFree)/MemTotal);
   }
@@ -212,8 +208,13 @@ int LinuxParser::TotalProcesses() {
       if(key=="processes"){
         return totalprocesses;
       }
+      else
+        continue;
     }
+    return 0;
   }
+  else
+    return 0;
 }
 
 // TODO: Read and return the number of running processes
@@ -228,8 +229,13 @@ int LinuxParser::RunningProcesses()  {
       if(key=="procs_running"){
         return processes_running;
       }
+      else
+        continue;
     }
+    return 0;
   }
+  else
+    return 0;
 }
 // TODO: Read and return the command associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
@@ -321,7 +327,6 @@ string LinuxParser::User(int pid) {
 // TODO: Read and return the uptime of a process
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::UpTime(int pid) {
-  int uid;
   string value, key;
   std::ifstream filestream(kProcDirectory+"/"+to_string(pid)+kStatFilename);
   if(filestream.is_open()){
@@ -335,4 +340,6 @@ long LinuxParser::UpTime(int pid) {
     }
     return 0;
   }
+  else
+    return 0;
 }
