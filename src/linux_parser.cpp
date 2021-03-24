@@ -149,11 +149,11 @@ long LinuxParser::ActiveJiffies(int pid) {
       std::istringstream linestream(line);
       int i = 0;
       while(linestream>>value){
-        i++;
-        if(i >= 14 && i <= 17){
+        if(i >= 13 && i <= 16){
           active_time += std::stol(value);
         }
-        if(i ==17){return active_time;}
+        if(i ==16){return active_time;}
+        i++;
       }
     }
   }

@@ -3,8 +3,8 @@
 #include <unistd.h>
 // TODO: Return the aggregate CPU utilization
 float Processor::Utilization() {
-	long delta_active, delta_total;
-	long total_jiffies_start, active_jiffies_start, total_jiffies_end, active_jiffies_end;
+	float delta_active, delta_total;
+	float total_jiffies_start, active_jiffies_start, total_jiffies_end, active_jiffies_end;
 	total_jiffies_start = LinuxParser::Jiffies();
 	active_jiffies_start = LinuxParser::ActiveJiffies();
 	// Wait 100ms
@@ -16,5 +16,5 @@ float Processor::Utilization() {
 	delta_total = total_jiffies_end - total_jiffies_start;
 	delta_active = active_jiffies_end - active_jiffies_start;
 
-	return 1.0*delta_active / delta_total;
+	return delta_active / delta_total;
 }
